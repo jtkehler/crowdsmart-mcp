@@ -1,0 +1,37 @@
+[project]
+name = "crowdsmart-mcp"
+version = "0.1.0"
+description = "MCP server for CrowdSmart Knowledge Agents and Jams: a small, current subset of the csgcip API"
+readme = "README.md"
+authors = [
+    { name = "Jack Kehler", email = "jtkehler@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "httpx2>=2.16.0",
+    "mcp[cli]>=2.3.0",
+    "pydantic>=2.14.1",
+]
+
+[project.scripts]
+crowdsmart-mcp = "crowdsmart_mcp.server:main"
+
+[build-system]
+requires = ["uv_build>=0.13.6,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.40.2",
+    "pytest>=9.2.0",
+    "ruff>=0.17.3",
+]
+
+[tool.basedpyright]
+# The server passes the API's JSON through; Any is the honest type for it.
+reportAny = false
+reportExplicitAny = false
+
+[tool.uv]
+# Rebuild for `uvx --from <checkout>` when the source changes, not only pyproject.toml.
+cache-keys = [{ file = "pyproject.toml" }, { file = "src/**/*.py" }]
