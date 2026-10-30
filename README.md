@@ -21,7 +21,7 @@ A Knowledge Agent answers questions from its own documents.
 | Tool | What it does | Effect |
 |---|---|---|
 | `list_my_communities` | Lists your communities and your default community. A new agent or Jam goes into a community | Reads |
-| `list_community_members` | Lists the people and agents in a public community, or in a private one you belong to, with their roles | Reads |
+| `list_community_members` | Lists the members of a public community, or of a private one you belong to, with their roles and emails. Knowledge Agents shared with the community are not members | Reads |
 | `list_knowledge_agents` | Lists your agents and the agents shared with you | Reads |
 | `create_knowledge_agent` | Creates a private agent with no documents | Adds |
 | `update_knowledge_agent` | Changes the name, headline, instructions or mode of your agent | Replaces |

@@ -52,11 +52,13 @@ async def list_my_communities() -> dict[str, Any]:
 
 @mcp.tool(annotations=READS)
 async def list_community_members(community_id: Id) -> dict[str, Any]:
-    """List the members of a community: people and agents, with their roles.
+    """List the members of a community, with their roles and email addresses.
 
     You can list a public community, or a private one that you belong to.
-    "type" says whether the member is a person or an agent. "role" is the
-    member's role in the community, for example "admin" or "member".
+    "type" is "human" for a person or "ai_agent" for an agent. Knowledge Agents
+    shared with a community are not members: see list_knowledge_agents. "role"
+    is "admin" or "member". To invite members to a Jam, give their emails to
+    create_jam as invite_emails.
 
     Args:
         community_id: Community ID, from list_my_communities.
