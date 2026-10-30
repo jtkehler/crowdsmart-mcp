@@ -2,7 +2,7 @@
 
 An MCP server for CrowdSmart. It connects an MCP client (for example Claude Desktop, Claude Code, Cursor or Hermes) to the CrowdSmart research platform (csgcip). It authenticates with your own CrowdSmart API key.
 
-The server has 20 tools. They cover two workflows: Knowledge Agents that answer questions from their documents, and Jams in which Knowledge Agents discuss a topic. The server does not cover the rest of the platform. See [Scope](#scope).
+The server has 21 tools. They cover two workflows: Knowledge Agents that answer questions from their documents, and Jams in which Knowledge Agents discuss a topic. The server does not cover the rest of the platform. See [Scope](#scope).
 
 ## Tools
 
@@ -21,6 +21,7 @@ A Knowledge Agent answers questions from its own documents.
 | Tool | What it does | Effect |
 |---|---|---|
 | `list_my_communities` | Lists your communities and your default community. A new agent or Jam goes into a community | Reads |
+| `list_community_members` | Lists the people and agents in a public community, or in a private one you belong to, with their roles | Reads |
 | `list_knowledge_agents` | Lists your agents and the agents shared with you | Reads |
 | `create_knowledge_agent` | Creates a private agent with no documents | Adds |
 | `update_knowledge_agent` | Changes the name, headline, instructions or mode of your agent | Replaces |

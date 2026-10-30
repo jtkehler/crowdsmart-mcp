@@ -66,6 +66,51 @@ async def test_list_my_communities_returns_ids_and_the_default(api: FakeApi):
     }
 
 
+async def test_list_community_members_returns_names_types_and_roles(api: FakeApi):
+    routes, requests = api
+    member = {
+        "participant_id": "p1",
+        "name": "Grace Hopper",
+        "email": "grace@example.com",
+        "type": "human",
+        "role": "admin",
+        "is_default": False,
+        "joined_at": "2026-10-01T12:00:00Z",
+    }
+    routes["GET", "/api/communities/c1/members"] = ok(
+        {"success": True, "members": [member], "count": 1}
+    )
+
+    result = await call_tool("list_community_members", community_id="c1")
+
+    assert requests[-1].url.params["participant_id"] == USER_ID
+    assert result.structured_content == {
+        "members": [
+            {
+                "id": "p1",
+                "name": "Grace Hopper",
+                "email": "grace@example.com",
+                "type": "human",
+                "role": "admin",
+                "joined_at": "2026-10-01T12:00:00Z",
+            }
+        ]
+    }
+
+
+async def test_list_community_members_reports_a_private_community_you_are_not_in(
+    api: FakeApi,
+):
+    routes, _ = api
+    routes["GET", "/api/communities/c2/members"] = httpx2.Response(
+        403, json={"detail": "Not a member of this community"}
+    )
+
+    result = await call_tool("list_community_members", community_id="c2")
+
+    assert "403: Not a member of this community" in error_text(result)
+
+
 async def test_list_knowledge_agents_separates_own_and_shared(api: FakeApi):
     routes, requests = api
     routes["GET", f"{AGENTS}/user/{USER_ID}"] = ok([agent("a1")])
