@@ -11,6 +11,7 @@ pytestmark = pytest.mark.anyio
 
 KNOWLEDGE_AGENT_TOOLS = {
     "list_my_communities",
+    "list_community_members",
     "list_knowledge_agents",
     "create_knowledge_agent",
     "update_knowledge_agent",
@@ -36,6 +37,7 @@ JAM_TOOLS = {
 
 READ_ONLY = {
     "list_my_communities",
+    "list_community_members",
     "list_knowledge_agents",
     "list_documents",
     "read_document",

@@ -50,6 +50,38 @@ async def list_my_communities() -> dict[str, Any]:
     }
 
 
+@mcp.tool(annotations=READS)
+async def list_community_members(community_id: Id) -> dict[str, Any]:
+    """List the members of a community: people and agents, with their roles.
+
+    You can list a public community, or a private one that you belong to.
+    "type" says whether the member is a person or an agent. "role" is the
+    member's role in the community, for example "admin" or "member".
+
+    Args:
+        community_id: Community ID, from list_my_communities.
+    """
+    user = await api.me()
+    result = await api.call(
+        "GET",
+        f"/api/communities/{community_id}/members",
+        params={"participant_id": user["user_id"]},
+    )
+    return {
+        "members": [
+            {
+                "id": member["participant_id"],
+                "name": member.get("name"),
+                "email": member.get("email"),
+                "type": member.get("type"),
+                "role": member["role"],
+                "joined_at": member.get("joined_at"),
+            }
+            for member in result["members"]
+        ]
+    }
+
+
 def _agent_summary(agent: dict[str, Any]) -> dict[str, Any]:
     # The API treats every mode except foundation_assisted as Referenced Retrieval.
     generative = agent["generation_mode"] == MODES["generative"]
